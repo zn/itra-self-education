@@ -11,13 +11,31 @@ namespace tests
         [TestMethod]
         public void IterativeChopTest()
         {
-            runTests(p.IterativeChop);
+            runTests(p.IterativeBinarySearch);
         }
 
         [TestMethod]
         public void RecursiveChopTest()
         {
-            runTests(p.RecursiveChop);    
+            runTests(p.RecursiveBinarySearch);    
+        }
+
+        [TestMethod]
+        public void FunctionalChopTest()
+        {
+            runTests(p.FunctionalBinarySearch);    
+        }
+        
+        [TestMethod]
+        public void UnsafeBinarySearchTest()
+        {
+            runTests(p.UnsafeBinarySearch);    
+        }
+        
+        [TestMethod]
+        public void ThirdPartyBinarySearchTest()
+        {
+            runTests(p.ThirdPartyBinarySearch);    
         }
 
         private void runTests(Chop chop)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace kata2
 {
@@ -9,12 +11,9 @@ namespace kata2
     public class Program
     {
         
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
-
-        public int IterativeChop(int x, int[] array)
+        public static void Main(){}
+        
+        public int IterativeBinarySearch(int x, int[] array)
         {
             if(array == null || array.Length == 0)
             {
@@ -23,31 +22,31 @@ namespace kata2
 
             int a = 0;
             int b = array.Length-1;
-            int pivot = array.Length / 2;
+            int mid = array.Length / 2;
 
             while(a <= b)
             {
-                if(x == array[pivot])
+                if(x == array[mid])
                 {
-                    return pivot;
+                    return mid;
                 }
 
-                if (x < array[pivot])
+                if (x < array[mid])
                 {
-                    b = pivot - 1;
+                    b = mid - 1;
                 }
                 else
                 {
-                    a = pivot + 1;
+                    a = mid + 1;
                 }
                 
-                pivot = a + (b - a) / 2;
+                mid = a + (b - a) / 2;
             }
 
             return -1;
         }
 
-        public int RecursiveChop(int x, int[] array)
+        public int RecursiveBinarySearch(int x, int[] array)
         {
             if(array == null || array.Length == 0)
             {
@@ -60,23 +59,102 @@ namespace kata2
             {
                 if(a <= b)
                 {
-                    int pivot = a + (b - a) / 2;
-                    if(x == array[pivot])
+                    int mid = a + (b - a) / 2;
+                    if(x == array[mid])
                     {
-                        return pivot;
+                        return mid;
                     }
-                    if (x < array[pivot])
+                    if (x < array[mid])
                     {
-                        return binarySearch(x, array, a, pivot - 1);
+                        return binarySearch(x, array, a, mid - 1);
                     }
                     else
                     {
-                        return binarySearch(x, array, pivot + 1, b);
+                        return binarySearch(x, array, mid + 1, b);
                     }
                 }    
                 return -1;
             }
         }
+   
+        public int FunctionalBinarySearch(int x, int[] array)
+        {
+            int index = -1;
+            if (binarySearch(array) == -1)
+            {
+                return -1;
+            }
+            return index-1;
+            
+            int binarySearch(IEnumerable<int> slice)
+            {
+                if(slice.Count() == 1 && slice.First() != x)
+                {
+                    return -1;
+                }
 
+                if(slice.Count() > 0)
+                {
+                    int mid = slice.Pivot();
+                    if(x == slice.ElementAt(mid))
+                    {
+                        return mid;
+                    }
+                    if (x < slice.ElementAt(mid))
+                    {
+                        index -= mid;
+                        return binarySearch(slice.Take(mid));
+                    }
+
+                    index += mid+1;
+                    return binarySearch(slice.Skip(mid+1));
+                }    
+                return -1;
+            }
+        }
+
+        public int UnsafeBinarySearch(int x, int[] array)
+        {
+            unsafe
+            {
+                fixed (int* p = &array[0])
+                {
+                    return binarySearch(x, p, array.Length);
+                }
+            }
+            
+            unsafe int binarySearch(int x, int* array, int arrayLength)
+            {
+                int a = 0;
+                int b = arrayLength - 1;
+                int mid = arrayLength / 2;
+
+                while(a <= b)
+                {
+                    if(x == array[mid])
+                    {
+                        return mid;
+                    }
+
+                    if (x < array[mid])
+                    {
+                        b = mid - 1;
+                    }
+                    else
+                    {
+                        a = mid + 1;
+                    }
+                
+                    mid = a + (b - a) / 2;
+                }        
+                return -1;
+            }
+        }
+
+        public int ThirdPartyBinarySearch(int x, int[] array)
+        {
+            int index = Array.BinarySearch(array, 0, array.Length, x);
+            return index >= 0 ? index : -1;
+        }
     }
 }
