@@ -6,36 +6,34 @@ namespace tests
     [TestClass]
     public class UnitTest1
     {
-        Program p = new Program();
-
         [TestMethod]
         public void IterativeChopTest()
         {
-            runTests(p.IterativeBinarySearch);
+            runTests(Program.IterativeBinarySearch);
         }
 
         [TestMethod]
         public void RecursiveChopTest()
         {
-            runTests(p.RecursiveBinarySearch);    
+            runTests(Program.RecursiveBinarySearch);    
         }
 
         [TestMethod]
         public void FunctionalChopTest()
         {
-            runTests(p.FunctionalBinarySearch);    
+            runTests(Program.FunctionalBinarySearch);    
         }
         
         [TestMethod]
-        public void UnsafeBinarySearchTest()
+        public void UnsafeChopTest()
         {
-            runTests(p.UnsafeBinarySearch);    
+            runTests(Program.UnsafeBinarySearch);    
         }
         
         [TestMethod]
-        public void ThirdPartyBinarySearchTest()
+        public void ThirdPartyChopTest()
         {
-            runTests(p.ThirdPartyBinarySearch);    
+            runTests(Program.ThirdPartyBinarySearch);    
         }
 
         private void runTests(Chop chop)

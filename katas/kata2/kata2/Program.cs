@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace kata2
 {
@@ -10,10 +8,9 @@ namespace kata2
     
     public class Program
     {
-        
         public static void Main(){}
         
-        public int IterativeBinarySearch(int x, int[] array)
+        public static int IterativeBinarySearch(int x, int[] array)
         {
             if(array == null || array.Length == 0)
             {
@@ -46,7 +43,7 @@ namespace kata2
             return -1;
         }
 
-        public int RecursiveBinarySearch(int x, int[] array)
+        public static int RecursiveBinarySearch(int x, int[] array)
         {
             if(array == null || array.Length == 0)
             {
@@ -77,7 +74,7 @@ namespace kata2
             }
         }
    
-        public int FunctionalBinarySearch(int x, int[] array)
+        public static int FunctionalBinarySearch(int x, int[] array)
         {
             int index = -1;
             if (binarySearch(array) == -1)
@@ -113,8 +110,12 @@ namespace kata2
             }
         }
 
-        public int UnsafeBinarySearch(int x, int[] array)
+        public static int UnsafeBinarySearch(int x, int[] array)
         {
+            if(array == null || array.Length == 0)
+            {
+                return -1;
+            }
             unsafe
             {
                 fixed (int* p = &array[0])
@@ -127,7 +128,7 @@ namespace kata2
             {
                 int a = 0;
                 int b = arrayLength - 1;
-                int mid = arrayLength / 2;
+                int mid = arrayLength >> 1;
 
                 while(a <= b)
                 {
@@ -145,13 +146,13 @@ namespace kata2
                         a = mid + 1;
                     }
                 
-                    mid = a + (b - a) / 2;
+                    mid = a + ((b - a) >> 1);
                 }        
                 return -1;
             }
         }
 
-        public int ThirdPartyBinarySearch(int x, int[] array)
+        public static int ThirdPartyBinarySearch(int x, int[] array)
         {
             int index = Array.BinarySearch(array, 0, array.Length, x);
             return index >= 0 ? index : -1;
