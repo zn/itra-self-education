@@ -58,6 +58,9 @@ namespace tests
             Assert.AreEqual(-1, chop(6, new[] { 1, 3, 5, 7 }));
             Assert.AreEqual(-1, chop(8, new[] { 1, 3, 5, 7}));
             Assert.AreEqual(2, chop(4, new[] { 1, 3, 4, 5, 7}));
+
+
+            Assert.AreEqual(2, chop(3, new[] { 1, 2, 3, 3, 4, 5, 5, 7, 7}));
         }
     }
 }

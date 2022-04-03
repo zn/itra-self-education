@@ -90,7 +90,7 @@ namespace kata2
                     return -1;
                 }
 
-                if(slice.Count() > 0)
+                if(slice.Any())
                 {
                     int mid = slice.Pivot();
                     if(x == slice.ElementAt(mid))
